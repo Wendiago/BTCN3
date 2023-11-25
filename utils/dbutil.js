@@ -37,75 +37,70 @@ async function createDB() {
 
     // Now, create the necessary tables
     await pool.query(`
-    CREATE TABLE IF NOT EXISTS Movie (
-      movie_id VARCHAR(255) PRIMARY KEY,
-      title VARCHAR(255),
-      originalTitle VARCHAR(255),
-      fullTitle VARCHAR(255),
-      year VARCHAR(4),
-      releaseDate DATE,
-      runtimeStr TEXT,
-      plot TEXT,
-      awards VARCHAR(255),
-      directorList TEXT[],
-      writerList TEXT[],
-      actorList JSON[],
-      genreList TEXT[],
-      companies VARCHAR(255),
-      countries VARCHAR(255),
-      languages VARCHAR(255),
-      imDbRating VARCHAR(10),
-      posters TEXT[],
-      images JSON[],
-      boxOffice VARCHAR(255),
-      plotFull TEXT,
-      similars TEXT[]
+    CREATE TABLE IF NOT EXISTS "Movie" (
+      "movie_id" VARCHAR(255) PRIMARY KEY,
+      "title" VARCHAR(255),
+      "originalTitle" VARCHAR(255),
+      "fullTitle" VARCHAR(255),
+      "year" VARCHAR(4),
+      "releaseDate" DATE,
+      "runtimeStr" TEXT,
+      "plot" TEXT,
+      "awards" VARCHAR(255),
+      "directorList" TEXT[],
+      "writerList" TEXT[],
+      "actorList" JSON[],
+      "genreList" TEXT[],
+      "companies" VARCHAR(255),
+      "countries" VARCHAR(255),
+      "languages" VARCHAR(255),
+      "imDbRating" VARCHAR(10),
+      "posters" TEXT[],
+      "images" JSON[],
+      "boxOffice" VARCHAR(255),
+      "plotFull" TEXT,
+      "similars" TEXT[]
     );
   `);
 
     // Create table for actors
     await pool.query(`
-        CREATE TABLE IF NOT EXISTS Actor (
+        CREATE TABLE IF NOT EXISTS "Actor" (
         actor_id VARCHAR(255) PRIMARY KEY,
         name VARCHAR(255),
         role VARCHAR(255),
         image VARCHAR(255),
         summary TEXT,
-        birthDate DATE,
-        deathDate DATE,
+        "birthDate" DATE,
+        "deathDate" DATE,
         awards VARCHAR(255),
         height VARCHAR(255),
-        castMovies JSON[],
+        "castMovies" JSON[],
         images JSON[]
         );
     `);
 
     // Create table for reviews
     await pool.query(`
-        CREATE TABLE IF NOT EXISTS Review (
+        CREATE TABLE IF NOT EXISTS "Review" (
         review_id SERIAL PRIMARY KEY,
-        movie_id VARCHAR(255) REFERENCES Movie(movie_id),
-        username VARCHAR(255),
-        warningSpoilers BOOLEAN,
-        date DATE,
-        rate VARCHAR(5),
-        title VARCHAR(255),
-        content TEXT
+        movie_id VARCHAR(255) REFERENCES "Movie"(movie_id),
+        "reviewContent" JSON[]
         );
     `);
 
     // Create table for favorite movies
     await pool.query(`
-        CREATE TABLE IF NOT EXISTS FavoriteMovie (
+        CREATE TABLE IF NOT EXISTS "FavoriteMovie" (
         fav_id SERIAL PRIMARY KEY,
-        movie_id VARCHAR(255) REFERENCES Movie(movie_id) ON DELETE CASCADE
+        movie_id VARCHAR(255) REFERENCES "Movie"(movie_id) ON DELETE CASCADE
         );
     `);
 
         console.log('Tables created successfully');
-        pool.end();
-        db.end();
-        console.log('Connection to the database closed');
+        // pool.end();
+        // db.end();
+        //console.log('Connection to the database closed');
     } catch (err) {
         console.error('Error occurred:', err);
         await db.end(); // Close the connection

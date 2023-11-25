@@ -5,6 +5,7 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT;
 const createDB = require('./utils/dbutil');
+const initDB = require('./utils/initDB');
 
 async function startApp() {
   // Parsing middleware
@@ -24,6 +25,7 @@ async function startApp() {
 
   try {
     await createDB();
+    await initDB();
     app.listen(port, () => console.log(`Listening on port ${port}`));
   } catch (error) {
     console.error('Error starting the app:', error);
