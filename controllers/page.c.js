@@ -1,3 +1,4 @@
+
 class PageController{
     async home(req, res, next) {
         try {

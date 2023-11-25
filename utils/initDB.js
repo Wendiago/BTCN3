@@ -96,12 +96,16 @@ async function initDB(){
         
         for (const review of reviews) {
             const movieExists = await db.query(`SELECT 1 FROM public."Movie" WHERE movie_id = $1`, [review.movieId]);
-        
             if (!movieExists.rows.length) {
                 console.log(`Movie with ID ${review.movieId} doesn't exist in the database.`);
                 continue;
             }
-        
+
+            const movieInReviewExists = await db.query(`SELECT 1 FROM public."Review" WHERE movie_id = $1`, [review.movieId]);
+            if (movieInReviewExists.rows.length) {
+                continue;
+            }
+
             await db.query(insertReviewQuery, [
                 review.movieId, 
                 review.items
