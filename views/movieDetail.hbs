@@ -1,0 +1,51 @@
+<div class="movie-detail">
+    <div class="movie-info border border-2 p-2 rounded d-flex">
+      <div class="movie-img">
+        <img src="{{movie.image}}" alt="" style="max-height: 700px; width: auto">
+      </div>
+      <div class="movie-info ps-3">
+        <h2 class="movie-title">{{ movie.title }}</h2>
+        <p class="movie-fulltitle">{{ movie.fullTitle }}</p>
+        <p class="movie-year"><span class="fw-bold">Năm:</span> {{ movie.year }}</p>
+        <p class="movie-length"><span class="fw-bold">Thời lượng:</span> {{ movie.runtimeStr }}</p>
+        <p class="movie-genre"><span class="fw-bold">Thể loại:</span> {{ movie.genreList }}</p>
+        <p class="movie-actors">
+          <span class="fw-bold">Diễn viên: </span>
+          {{#each actors}}
+            <a href="/actor/{{this.actor_id}}" class="actor-link">{{this.name}}</a>
+            {{#unless @last}}, {{/unless}}
+          {{/each}}
+        </p>
+        <p class="movie-summary">
+          <span class="fw-bold">Tóm tắt:</span> {{ movie.plot }}
+        </p>
+        <p class="movie-rating">
+          <span class="fw-bold">Đánh giá:</span>
+          {{ movie.imDbRating }}
+        </p>
+      </div>
+    </div>
+
+    <div class="review-notice mt-5 fw-bolder fs-5">REVIEWS</div>
+        <div class="movie-review border border-2 rounded">
+        <div class="reviews">
+            <div class="card review border border-black p-4 mb-2">
+            {{#each review}}
+              <div class="card-body bg-info-subtle my-2 border border-black rounded-2">
+                  <h5 class="card-title">{{this.title}}</h5>
+                  <p class="card-subtitle"><span class="fw-bold">Tên:</span> {{ this.username }}</p>
+                  <p class="card-text"><span class="fw-bold">Ngày:</span> {{ this.date }}</p>
+                  <p class="card-text"><span class="fw-bold">Điểm:</span> {{ this.rate }}</p>
+                  <p class="card-text">
+                      <span class="fw-bold">Bình luận:</span> {{ this.content }}
+                  </p>
+              </div>
+            {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  
+</script>

@@ -15,13 +15,13 @@ async function initDB(){
 
         const insertMovieQuery = `
                 INSERT INTO public."Movie" (
-                    movie_id, title, "originalTitle", "fullTitle", year, "releaseDate",
+                    movie_id, title, "originalTitle", "fullTitle", year, image, "releaseDate",
                     "runtimeStr", plot, awards, "directorList", "writerList", "actorList",
                     "genreList", companies, countries, languages, "imDbRating", posters,
                     images, "boxOffice", "plotFull", similars
                 ) VALUES (
                     $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15,
-                    $16, $17, $18, $19, $20, $21, $22
+                    $16, $17, $18, $19, $20, $21, $22, $23
                 )
         `;
         for (const movie of movies){
@@ -34,7 +34,7 @@ async function initDB(){
             }
 
             await db.query(insertMovieQuery, [
-                movie.id, movie.title, movie.originalTitle, movie.fullTitle, movie.year, movie.releaseDate,
+                movie.id, movie.title, movie.originalTitle, movie.fullTitle, movie.year, movie.image, movie.releaseDate,
                 movie.runtimeStr, movie.plot, movie.awards, movie.directorList, movie.writerList, movie.actorList,
                 movie.genreList, movie.companies, movie.countries, movie.languages, movie.imDbRating, movie.posters,
                 movie.images, movie.boxOffice, movie.plotFull, movie.similars

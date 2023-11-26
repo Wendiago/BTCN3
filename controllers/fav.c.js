@@ -1,5 +1,4 @@
-
-class PageController{
+class FavController{
     async home(req, res, next) {
         try {
             res.render('homepage');
@@ -9,4 +8,4 @@ class PageController{
     }
 }
 
-module.exports = new PageController;
+module.exports = new FavController;

@@ -42,9 +42,27 @@ class Movie{
         `, [movie_id])
         return res.rows[0];
     }
+    async getActorList(movie_id){
+        const res = await db.query(`
+            SELECT * 
+            FROM public."Movie" M
+            WHERE M.movie_id = $1
+        `, [movie_id])
+        if (res && res.rows.length > 0) {
+            const actorIds = res.rows[0].actorList.map(actor => actor.id);
+            const actorQuery = `
+                SELECT * FROM public."Actor"
+                WHERE actor_id IN (${actorIds.map(id => `'${id}'`).join(',')});
+            `;
+            const actors = await db.query(actorQuery);
+            return actors.rows;
+        }
+        else{
+            return [];
+        }
+    }
     async searchByTitle(input){
-        //If search nothing, return all movies
-        if (input.length === 0){
+        if (!input || input.length === 0) {
             const res = await db.query(`
                 SELECT * FROM public."Movie"
             `);

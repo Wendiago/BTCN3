@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const PageController = require('../controllers/page.c');
+const PageController = require('../controllers/main.c');
 
-router.use('/', PageController.home);
+router.get('/', PageController.home);
 
 module.exports = router

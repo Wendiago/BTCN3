@@ -1,0 +1,13 @@
+a{
+    text-decoration: none;
+}
+
+.img-equal-height {
+    height: 700px;
+    width: auto;
+}
+.carousel-inner img {
+    width: 700px; /* Set the width of the image */
+    height: 550px; /* Set the height of the image */
+    object-fit: cover; /* Maintain aspect ratio while covering the area */
+}

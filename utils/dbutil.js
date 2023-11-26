@@ -43,6 +43,7 @@ async function createDB() {
       "originalTitle" VARCHAR(255),
       "fullTitle" VARCHAR(255),
       "year" VARCHAR(4),
+      "image" TEXT,
       "releaseDate" DATE,
       "runtimeStr" TEXT,
       "plot" TEXT,

@@ -1,0 +1,88 @@
+<div class="container d-flex flex-column align-items-center gap-4 mt-2">
+    <div class="">
+        <div id="top-rating-movie" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#top-rating-movie" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#top-rating-movie" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#top-rating-movie" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#top-rating-movie" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#top-rating-movie" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            </div>
+            <div class="carousel-inner top-rating">
+                {{#each topRatingMovies}}
+                <div class="carousel-item" data-bs-interval="3000">
+                    <a href="/movie/{{this.movie_id}}">
+                    <img src="{{this.image}}" class="d-block w-100" style=""/>
+                    </a>
+                    <div class="carousel-caption d-none d-md-block text-warning">
+                        <h5>{{this.fullTitle}}</h5>
+                        <p>{{this.genreList}}</p>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#top-rating-movie"
+                data-bs-slide="prev"
+            >
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#top-rating-movie"
+                data-bs-slide="next"
+            >
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+
+    <h3 class="text-center align-self-start">Top Box Office</h3>
+    <div class="d-flex flex-column">
+        <div id="top-boxOffice-movie" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner top-boxOffice">
+            {{#each topBoxOffice}}
+            <div class="carousel-item" data-bs-interval="3000">
+                <a href="/movie/{{this.movie_id}}">
+                <img src="{{this.image}}" class="d-block w-100" />
+                </a>
+            </div>
+            {{/each}}
+        </div>
+        <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#top-boxOffice-movie"
+            data-bs-slide="prev"
+        >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#top-boxOffice-movie"
+            data-bs-slide="next"
+        >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .carousel-inner { width: 350px; }
+</style>
+
+<script>
+    $(document).ready(function() {
+        document.querySelector('.top-rating .carousel-item').classList.add('active');
+        document.querySelector('.top-boxOffice .carousel-item').classList.add('active');
+    });
+</script>
