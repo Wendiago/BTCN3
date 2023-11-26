@@ -8,14 +8,12 @@ class Review{
             WHERE movie_id = $1
         `, [movie_id])
         
-        if (res){
-            const reviews = res.rows[0].reviewContent;
-            //console.log(reviews);
-            return reviews;
-        } 
-        else{
+        const reviews = res.rows;
+        if (reviews.length === 0){
             return [];
         }
+        //console.log(reviews);
+        return reviews[0].reviewContent;
     }
 }
 

@@ -36,7 +36,19 @@ class MovieController{
     }
     async getReview(req, res, next){
         try {
-            
+            const {movieId} = req.params;
+            let {perPage = 2, page = 1} = req.query;
+            page = Number.parseInt(page);
+            perPage = Number.parseInt(perPage);
+
+            const reviews = await Review.getReview(movieId);
+            const totalPage = Math.ceil(reviews.length / perPage);
+            res.json({
+                data: reviews.splice((page - 1) * perPage, perPage),
+                totalPage,
+                page,
+                perPage
+            })
         } catch (error) {
             next(error);
         }

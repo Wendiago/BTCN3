@@ -1,4 +1,4 @@
-<div class="movie-detail">
+<div class="movie-detail d-flex flex-column">
     <div class="movie-info border border-2 p-2 rounded d-flex">
       <div class="movie-img">
         <img src="{{movie.image}}" alt="" style="max-height: 700px; width: auto">
@@ -29,8 +29,8 @@
     <div class="review-notice mt-5 fw-bolder fs-5">REVIEWS</div>
         <div class="movie-review border border-2 rounded">
         <div class="reviews">
-            <div class="card review border border-black p-4 mb-2">
-            {{#each review}}
+            <div class="card review-container border border-black p-4 mb-2">
+            {{!-- {{#each review}}
               <div class="card-body bg-info-subtle my-2 border border-black rounded-2">
                   <h5 class="card-title">{{this.title}}</h5>
                   <p class="card-subtitle"><span class="fw-bold">Tên:</span> {{ this.username }}</p>
@@ -40,12 +40,98 @@
                       <span class="fw-bold">Bình luận:</span> {{ this.content }}
                   </p>
               </div>
-            {{/each}}
+            {{/each}} --}}
             </div>
         </div>
     </div>
+    <nav aria-label="Page navigation example" class="mt-2 align-self-center">
+      <ul class="pagination" >
+        
+      </ul>
+    </nav>
 </div>
 
 <script>
-  
+  $(document).ready(() => {
+    function loadReview(page){
+      $.ajax({
+        url: `/movie/{{movie.movie_id}}/reviews?page=${page}`,
+        method: 'GET',
+        success: function ({data, totalPage, page, perPage}){
+          //Render reviews
+          $('.review-container').empty(); // Clear previous reviews
+          data.forEach(review => {
+            const reviewHTML = `
+              <div class="card-body bg-info-subtle my-2 border border-black rounded-2">
+                <h5 class="card-title">${review.title}</h5>
+                <p class="card-subtitle"><span class="fw-bold">Tên:</span> ${review.username}</p>
+                <p class="card-text"><span class="fw-bold">Ngày:</span> ${review.date}</p>
+                <p class="card-text"><span class="fw-bold">Điểm:</span> ${review.rate}</p>
+                <p class="card-text">
+                  <span class="fw-bold">Bình luận:</span> ${review.content}
+                </p>
+              </div>
+            `;
+            $('.review-container').append(reviewHTML); // Append new reviews
+
+            //Render pagination
+            let pageItemsHTML = 
+              `<li class="page-item page-prev">
+                <span class="page-link">&laquo;</span>
+              </li>`
+
+            for (let i = 1; i <= totalPage; i++){
+              pageItemsHTML += 
+              `<li class="page-item ${i === page ? 'active' : ''}">
+                  <a class="page-link page-link">${i}</a>
+              </li>`
+            }
+
+            pageItemsHTML+= 
+              `<li class="page-item page-next">
+                <span class="page-link">&raquo;</span>
+              </li>`
+
+            $('.pagination').empty();
+            $('.pagination').append(pageItemsHTML);
+
+            const prevBtn = document.querySelector('.page-prev')
+            const nextBtn = document.querySelector('.page-next')
+
+            prevBtn.classList.remove('disabled') 
+            nextBtn.classList.remove('disabled') 
+
+            if (page === 1) {
+              prevBtn.classList.add('disabled') 
+            }
+            if (page === totalPage) {
+              nextBtn.classList.add('disabled') 
+            }
+              
+            prevBtn.addEventListener('click', () => {
+              if (page > 1) {
+                getReviewData(page - 1)
+              }  
+            })
+            nextBtn.addEventListener('click', () => {
+              if (page < totalPage) {
+                console.log(page)
+                getReviewData(page + 1)
+              }  
+            })
+          });
+        },
+        error: function(error) {
+          console.error('Error fetching reviews:', error);
+        }
+      })
+    }
+
+    loadReview(1);
+    $('.pagination').on('click', '.page-link', function(e) {
+      e.preventDefault();
+      const page = $(this).text();
+      loadReview(page);
+    });
+  })
 </script>
