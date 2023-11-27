@@ -9,6 +9,7 @@ class ActorController{
             //console.log(actor);
             const movieList = await Actor.getRelatedMovies(actorId);
             const totalPage = Math.ceil(movieList.length / perPage);
+            //console.log(movieList);
             res.render('actorDetail', {
                 actor,
                 movieList: movieList.splice((page - 1) * perPage, perPage),
