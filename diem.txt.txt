@@ -1,0 +1,15 @@
+-3 điểm: nếu sử dụng Template Engine không tự xây dựng hoặc không trả
+về cho client mã HTML.
+✓ 1 điểm: xây dựng được chức năng tạo Postgres database và import dữ liệu
+đúng yêu cầu
+✓ 1 điểm: trang quản lý danh sách movie yêu thích (fav).
+✓ 0.5 điểm: trang home hiển thị đúng yêu cầu.
+✓ 1 điểm: tìm kiếm movie, có phân trang (không bắt buộc AJAX).
+✓ 1 điểm: xem chi tiết movie với đủ thông tin.
+✓ 1 điểm: sử dụng AJAX phân trang các review của movie.
+✓ 1 điểm: xem chi tiết thông tin diễn viên có danh sách phim liên quan.
+✓ 1 điểm: tìm kiếm diễn viên hiển thị kết quả dạng bảng có phân trang.
+✓ 0.5 điểm: quản lý và xử lý hiển thị các lỗi cho người dùng
+
+=============================================================================
+15-3-1 = 11 điểm

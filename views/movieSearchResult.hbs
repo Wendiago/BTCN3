@@ -1,3 +1,4 @@
+{{#if movieList.length}}
 <div class="row g-4 w-100">
   {{#each movieList}}
     <div class="col-lg-4 col-4">
@@ -29,7 +30,9 @@
     </ul>
   </nav>
 </div>
-
+{{else}}
+    <p class="w-100 text-center fw-bolder">No movie found.</p>
+{{/if}}
 <style>
     .movie-card img { 
         height: 500px; 

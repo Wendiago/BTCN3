@@ -83,6 +83,7 @@
     </div>
 
     <h3 class="text-center align-self-center mt-5">Top Favorites</h3>
+    {{#if topFavoriteMovies.length}}
     <div class="d-flex flex-column">
         <div id="top-favorite-movie" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
@@ -123,6 +124,9 @@
             </button>
         </div>
     </div>
+    {{else}}
+    <p>No favorite movies available.</p>
+    {{/if}}
 </div>
 
 <style>

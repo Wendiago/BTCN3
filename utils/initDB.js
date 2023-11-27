@@ -2,7 +2,7 @@ const db = require('../config/connection');
 require('dotenv').config;
 const fs = require('fs');
 const path = require('path');
-const filePath = path.join(__dirname, '../db/data.json');
+const filePath = path.join(__dirname, `../db/${process.env.JSON_FILE}`);
 
 async function initDB(){
     try {
