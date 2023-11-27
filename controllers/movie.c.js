@@ -28,7 +28,7 @@ class MovieController{
                 movieList: movieList.splice((page - 1) * perPage, perPage),
                 page,
                 searchKey,
-                totalPage
+                totalPage,
             })
         } catch (error) {
             next(error);
@@ -45,6 +45,51 @@ class MovieController{
             const totalPage = Math.ceil(reviews.length / perPage);
             res.json({
                 data: reviews.splice((page - 1) * perPage, perPage),
+                totalPage,
+                page,
+                perPage
+            })
+        } catch (error) {
+            next(error);
+        }
+    }
+    async addFavoriteMovie(req, res, next) {
+        try {
+          const { movieId } = req.body;
+          const isAdded = await Movie.addFavoriteMovies(movieId);
+          if (isAdded) {
+            res.status(200).send('200');
+          } else {
+            res.status(500).send('500');
+          }
+        } catch (error) {
+          next(error);
+        }
+    }
+    async deleteFavoriteMovie(req, res, next) {
+        try {
+          const { movieId } = req.body;
+          const isRemoved = await Movie.deleteFavoriteMovie(movieId);
+          if (isRemoved) {
+            res.status(200).send('200');
+          } else {
+            res.status(500).send('500');
+          }
+        } catch (error) {
+          next(error);
+        }
+    }
+    async favoriteMovie(req, res, next){
+        try {
+            let {perPage = 6, page = 1} = req.query;
+            page = Number.parseInt(page);
+            perPage = Number.parseInt(perPage);
+
+            const movies = await Movie.getFavoriteMovies();
+            console.log(movies);
+            const totalPage = Math.ceil(movies.length / perPage);
+            res.render('favoriteMovie',{
+                movieList: movies.splice((page - 1) * perPage, perPage),
                 totalPage,
                 page,
                 perPage

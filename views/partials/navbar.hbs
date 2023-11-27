@@ -2,12 +2,18 @@
     <nav class="navbar navbar-expand-lg bg-danger-subtle my-1 border border-danger rounded-2">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
-                <i class="fa-solid fa-house"></i>
+                <i class="fa-solid fa-house" style="color: #dc3545;"></i>
             </a>
             <div class="individual-mark d-flex align-items-center">
-                <a href=""><h2>21297</h2></a>
+                <a href="/movie/favoriteMovie"><h2 style="color: #dc3545;">21297</h2></a>
             </div>
-            <form class="d-flex" role="search" method="GET" action="/movie/search">
+            <form id="searchForm" class="d-flex align-items-center" role="search" method="GET" action="/movie/search">
+                <div class="form-check me-3">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                        Actor
+                    </label>
+                </div>
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searchKey" value="{{searchKey}}">
                 <button class="btn btn-outline-danger" type="submit">Search</button>
             </form>
@@ -15,3 +21,19 @@
         </div>
     </nav>
 </div>
+
+<script>
+    $(document).ready(function() {
+        // Check the initial state of the checkbox
+        var isChecked = $('#defaultCheck1').is(':checked');
+        var formAction = isChecked ? '/actor/search' : '/movie/search';
+        $('#searchForm').attr('action', formAction);
+
+        // Change form action on checkbox change
+        $('#defaultCheck1').change(function() {
+            var isChecked = $(this).is(':checked');
+            var formAction = isChecked ? '/actor/search' : '/movie/search';
+            $('#searchForm').attr('action', formAction);
+        });
+    });
+</script>

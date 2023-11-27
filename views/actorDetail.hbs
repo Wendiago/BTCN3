@@ -1,0 +1,110 @@
+<div class="actor-detail d-flex flex-column">
+    <div class="actor-info border border-2 p-2 rounded d-flex">
+      <div class="actor-img">
+        <img src="{{actor.image}}" alt="" style="max-height: 700px; width: auto">
+      </div>
+      <div class="actor-info ps-3">
+        <h2 class="actor-name">{{ actor.name }}</h2>
+        <p class="actor-role"><span class="fw-bold">Nhiệm vụ: </span>{{ actor.role }}</p>
+        <p class="actor-summary"><span class="fw-bold">Tiểu sử: </span> {{ actor.summary }}</p>
+        <p class="actor-pob"><span class="fw-bold">Ngày sinh: </span> {{ actor.birthDate }}</p>
+        <p class=""><span class="fw-bold">Ngày mất: </span> {{ actor.deathDate }}</p>
+        <p class=""><span class="fw-bold">Giải thưởng: </span> {{ actor.awards }}</p>
+        <p class=""><span class="fw-bold">Chiều cao: </span> {{ actor.height }}</p>
+      </div>
+    </div>
+
+    <div class="row g-4 w-100">
+        {{#each movieList}}
+            <div class="col-lg-4 col-4">
+                <div
+                class="movie-card w-100 h-100 d-flex flex-column rounded-2 overflow-hidden"
+                >
+                <a href="/movie/{{this.movie_id}}">
+                    <img src="{{this.image}}" class="w-100" />
+                </a>
+                <div class="d-flex flex-column text-center p-1 pb-2 movie-card__desc">
+                    <span class="fs-5 fw-bold text-truncate w-100">{{this.title}}</span>
+                </div>
+                </div>
+            </div>
+        {{/each}}
+        <nav class="d-flex justify-content-center p-3">
+            <ul class="pagination m-0">
+                <li class="page-item page-prev">
+                    <span class="page-link">&laquo;</span>
+                </li>
+                {{#times totalPage}}
+                    <li class="page-item {{#ifEquals this ../page}}active{{/ifEquals}}">
+                        <span class="page-link page-number">{{this}}</span>
+                    </li>
+                {{/times}}
+                <li class="page-item page-next">
+                    <span class="page-link">&raquo;</span>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<style>
+    .movie-card img { 
+        height: 500px; 
+    } 
+    .movie-card:hover { 
+        cursor: pointer;
+        opacity: 0.8 
+    } 
+    .movie-card__desc { 
+        background: #f5f5f5; 
+    } 
+    .page-item {
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const page = Number.parseInt(urlParams.get('page')) || 1;
+    const totalPage = {{ totalPage }}; 
+
+    document.querySelectorAll('.page-number').forEach(pageElement => {
+        pageElement.addEventListener('click', () => {
+            const pageNum = parseInt(pageElement.innerText);
+            if (page !== pageNum) {
+                urlParams.set('page', pageNum);
+                window.location.search = urlParams;
+            }
+        });
+    });
+
+    const prevPageLink = document.querySelector('.page-prev .page-link');
+    if (prevPageLink) {
+        prevPageLink.addEventListener('click', () => {
+            if (page > 1) {
+                urlParams.set('page', page - 1);
+                window.location.search = urlParams;
+            }
+        });
+    }
+
+    const nextPageLink = document.querySelector('.page-next .page-link');
+    if (nextPageLink) {
+        nextPageLink.addEventListener('click', () => {
+            if (page < totalPage) {
+                urlParams.set('page', page + 1);
+                window.location.search = urlParams;
+            }
+        });
+    };
+
+    // Disable prev/next buttons if at first or last page
+    if (page === 1) {
+        document.querySelector('.page-prev').classList.add('disabled');
+    }
+
+    if (page === totalPage) {
+        document.querySelector('.page-next').classList.add('disabled');
+    }
+
+</script>

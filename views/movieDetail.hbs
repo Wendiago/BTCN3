@@ -23,6 +23,12 @@
           <span class="fw-bold">Đánh giá:</span>
           {{ movie.imDbRating }}
         </p>
+        <button type="button" id="add-to-fav" class="btn btn-danger btn-lg align-self-end" data-movieid="{{movie.movie_id}}">
+          Add to favorite
+        </button>
+        <button type="button" id="remove-from-fav" class="btn btn-secondary btn-lg align-self-end" data-movieid="{{movie.movie_id}}">
+          Remove from favorite
+        </button>
       </div>
     </div>
 
@@ -50,9 +56,49 @@
       </ul>
     </nav>
 </div>
-
+<style>
+  button:hover{
+    opacity: 0.6;
+  }
+</style>
 <script>
+  
   $(document).ready(() => {
+  
+    //Add movie to favorite:
+    const addbutton = document.querySelector("#add-to-fav");
+    console.log(addbutton.dataset.movieid);
+    addbutton.addEventListener('click', ()=>{
+      $.ajax({
+        url: `/movie/favoriteMovie/${addbutton.dataset.movieid}`,
+        method: 'POST',
+        data: {movieId: addbutton.dataset.movieid},
+        success: function(res){
+          alert('Added successfully');
+        },
+        error: function(error){
+          alert('This movie already exists');
+        }
+      })
+    })
+
+    //Remove movie from favorites:
+    const removeButton = document.querySelector("#remove-from-fav");
+    removeButton.addEventListener('click', () => {
+      $.ajax({
+        url: `/movie/favoriteMovie/${removeButton.dataset.movieid}`,
+        method: 'DELETE',
+        data: { movieId: removeButton.dataset.movieid },
+        success: function (res) {
+          alert('Removed successfully');
+        },
+        error: function (error) {
+          alert('Failed to remove movie from favorites');
+        }
+      });
+    });
+
+    //Pagination for reviews
     function loadReview(page){
       $.ajax({
         url: `/movie/{{movie.movie_id}}/reviews?page=${page}`,

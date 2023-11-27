@@ -1,14 +1,14 @@
 <div class="row g-4 w-100">
-  {{#each movieList}}
+  {{#each actorList}}
     <div class="col-lg-4 col-4">
         <div
-          class="movie-card w-100 h-100 d-flex flex-column rounded-2 overflow-hidden"
+          class="actor-card w-100 h-100 d-flex flex-column rounded-2 overflow-hidden"
         >
-          <a href="/movie/{{this.movie_id}}">
+          <a href="/actor/{{this.actor_id}}">
             <img src="{{this.image}}" class="w-100" />
           </a>
-          <div class="d-flex flex-column text-center p-1 pb-2 movie-card__desc">
-            <span class="fs-5 fw-bold text-truncate w-100">{{this.title}}</span>
+          <div class="d-flex flex-column text-center p-1 pb-2 actor-card__desc">
+            <span class="fs-5 fw-bold text-truncate w-100">{{this.name}}</span>
           </div>
         </div>
     </div>
@@ -31,14 +31,14 @@
 </div>
 
 <style>
-    .movie-card img { 
+    .actor-card img { 
         height: 500px; 
     } 
-    .movie-card:hover { 
+    .actor-card:hover { 
         cursor: pointer;
         opacity: 0.8 
     } 
-    .movie-card__desc { 
+    .actor-card__desc { 
         background: #f5f5f5; 
     } 
     .page-item {

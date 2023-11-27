@@ -87,23 +87,52 @@ class Movie{
 
         return res.rows;
     }
-    async addFavoriteMovies(movie_id){
-        await db.query(`
-            INSERT INTO public."FavoriteMovie" ("movie_id")
-            VALUES ($1)
-        `, [movie_id])
+    async addFavoriteMovies(movie_id) {
+        try {
+            // Check if the movie already exists in the FavoriteMovie table
+            const checkExisting = await db.query(`
+                SELECT * FROM public."FavoriteMovie"
+                WHERE "movie_id" = $1
+            `, [movie_id]);
+            //console.log(checkExisting)
+            if (checkExisting.rows.length > 0) {
+                return false; // Movie already exists in favorites
+            }
+    
+            // Movie does not exist in the FavoriteMovie table, proceed to insert
+            await db.query(`
+                INSERT INTO public."FavoriteMovie" ("movie_id")
+                VALUES ($1)
+            `, [movie_id]);
+    
+            return true; // Movie added to favorites successfully
+        } catch (error) {
+            return false; // Error occurred while adding movie to favorites
+        }
     }
     async getFavoriteMovies(){
         const res = await db.query(`
-            SELECT * FROM public."FavoriteMovie"
+            SELECT M.* FROM public."FavoriteMovie" F JOIN public."Movie" M
+            ON F.movie_id = M.movie_id
         `);
         return res.rows;
     }
     async deleteFavoriteMovie(movie_id){
+        // Check if the movie already exists in the FavoriteMovie table
+        const checkExisting = await db.query(`
+            SELECT * FROM public."FavoriteMovie"
+            WHERE "movie_id" = $1
+        `, [movie_id]);
+
+        if (checkExisting.rows.length == 0) {
+            return false; // Movie is not in favorites
+        }
+
         await db.query(`
             DELETE FROM public."FavoriteMovie"
             WHERE "movie_id" = $1
         `, [movie_id])
+        return true;
     }
 }
 

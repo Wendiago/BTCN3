@@ -7,9 +7,12 @@ class PageController{
             //console.log(topRatingMovies);
             const topBoxOffice = await Movie.getTopBoxOffice();
             //console.log(topBoxOffice);
+            const topFavoriteMovies = await Movie.getFavoriteMovies();
+            //console.log(topFavoriteMovies);
             res.render('homepage', {
                 topRatingMovies,
-                topBoxOffice
+                topBoxOffice,
+                topFavoriteMovies
             });
         } catch (error) {
             console.log(error);

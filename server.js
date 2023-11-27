@@ -4,9 +4,9 @@ const handlebars = require('express-handlebars');
 const path = require('path');
 const app = express();
 const port = process.env.PORT;
+const morgan = require('morgan');
 
 const mainRouter = require("./routes/main.r");
-const favRouter = require("./routes/fav.r");
 const movieRouter = require("./routes/movie.r");
 const actorRouter = require("./routes/actor.r");
 
@@ -18,7 +18,7 @@ async function startApp() {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   app.use(express.static(path.join(__dirname, 'public')));
-
+  app.use(morgan('combined'));
   // Template engine
   app.engine('.hbs', handlebars.engine({
     extname: '.hbs', 
@@ -49,9 +49,8 @@ async function startApp() {
 
   //Routing
   app.use("", mainRouter);
-  // app.use("/fav", favRouter);
   app.use("/movie", movieRouter);
-  // app.use("/actor", actorRouter);
+  app.use("/actor", actorRouter);
 
   try {
     await createDB();
